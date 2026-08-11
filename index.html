@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cicely y Juan Pablo</title>
+  
+  <!-- Meta etiquetas para WhatsApp / Redes Sociales -->
+  <meta property="og:title" content="Cicely y Juan Pablo">
+  <meta property="og:description" content="¡Te invitamos a nuestra boda! Haz clic para ver los detalles y confirmar tu asistencia.">
+  <meta property="og:image" content="https://res.cloudinary.com/gghygmrq/image/upload/v1784171573/portada_what_teb6kc.jpg">
+  <meta property="og:url" content="TU_URL_AQUI">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: #f7f7f7; font-family: 'Cinzel', serif; color: #000000; }
+    .container { max-width: 480px; margin: 0 auto; background-color: #ffffff; min-height: 100vh; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    .img-container { width: 100%; line-height: 0; }
+    .img-container img { width: 100%; height: auto; display: block; }
+    
+    .map-container, .gift-container { position: relative; width: 100%; line-height: 0; }
+    .map-container img, .gift-container img { width: 100%; height: auto; display: block; }
+
+    /* Música */
+    .music-section { background-color: #000000; padding: 30px 20px; display: flex; justify-content: center; align-items: center; }
+    .player-pill { background: #000000; padding: 8px 24px; border-radius: 50px; display: flex; align-items: center; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .play-btn { width: 32px; height: 32px; border-radius: 50%; background: #ffffff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    
+    /* Contador */
+    .counter-section { background-color: #ffffff; padding: 40px 20px; display: flex; justify-content: center; align-items: center; }
+    .tiempo { display: flex; justify-content: center; align-items: center; }
+    .bloque { display: flex; flex-direction: column; align-items: center; padding: 0 16px; }
+    .bloque span { font-size: 26px; line-height: 1; }
+    .label { font-size: 9px; letter-spacing: 1.5px; margin-top: 8px; opacity: .8; }
+
+    /* Botones */
+    .btn-beige {
+      display: inline-block; padding: 12px 20px; background-color: #BCB294; color: #ffffff;
+      text-decoration: none; font-family: 'Cinzel', serif; font-size: 12px; font-weight: bold;
+      text-transform: uppercase; letter-spacing: 1px; border: 1.5px solid #A99F81;
+      transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(188, 178, 148, 0.45);
+      white-space: nowrap;
+      min-width: 140px;
+      text-align: center;
+    }
+    .btn-beige:hover { background-color: #A99F81; transform: scale(1.05); }
+    .abs-btn { position: absolute; left: 50%; transform: translateX(-50%); }
+    .btn-catedral { top: 44%; }
+    .btn-quinta { top: 90%; }
+    .btn-mesa { top: auto; bottom: 20px; }
+
+    /* Galería */
+    .gallery-section { background-color: #ffffff; padding: 20px 0; width: 100%; }
+    .slider-container { position: relative; width: 100%; height: 500px; overflow: hidden; }
+    .slider-container img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease-in-out; }
+    .slider-container img.active { opacity: 1; }
+
+    /* Formulario */
+    .form-wrapper { padding: 10px; display: flex; justify-content: center; background-color: #ffffff; }
+    .form-container { width: 100%; max-width: 340px; }
+    label.titulo { display: block; margin-top: 25px; font-family: 'Cinzel', serif; font-size: 11px; margin-bottom: 8px; color: #B38E5D; letter-spacing: 2px; text-transform: uppercase; }
+    input[type="text"], textarea { width: 100%; padding: 12px 15px; border: 1px solid #D1C4B6; border-radius: 12px; background-color: #FAF6F0; color: #8A7A6B; font-family: 'Montserrat', sans-serif; font-size: 12px; }
+    .opciones-asistencia { display: flex; border: 1px solid #D1C4B6; border-radius: 12px; overflow: hidden; background-color: #FAF6F0; }
+    .opcion-item { flex: 1; padding: 12px 5px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 10px; color: #8A7A6B; text-align: center; }
+    .opcion-item input { display: none; }
+    .opcion-item:has(input:checked) { background-color: #000000; color: #FFFFFF; }
+    #exito { display: none; text-align: center; padding: 40px 10px; font-family: 'Cinzel', serif; }
+
+    /* Botón enviar en color negro y pase */
+    #btn {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        border: none;
+        padding: 15px;
+        width: 100%;
+        border-radius: 25px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: background 0.3s;
+    }
+    #btn:hover {
+        background-color: #333333 !important;
+    }
+
+    .pass-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .pass-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        display: block;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    #nombre-pase-overlay {
+        position: absolute;
+        top: 89%;
+        left: 8%;
+        transform: translateY(-50%);
+        width: 84%;
+        font-family: 'Cinzel', serif;
+        font-size: 15px;
+        color: #000000;
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-align: left;
+        pointer-events: none;
+        text-shadow: 0 1px 2px rgba(255,255,255,0.9);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+    }
+
+    .hidden {
+        opacity: 0;
+        visibility: hidden;
+        display: none !important;
+    }
+
+    #btn-descargar {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: background 0.3s;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    #btn-descargar:hover {
+        background-color: #333333 !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784168239/portada_vn0egk.jpg" alt="Portada"></div>
+  
+  <div class="music-section">
+    <div class="player-pill">
+      <audio id="audio" loop><source src="https://regalalasestrellas.weebly.com/uploads/1/3/2/0/132094004/carin_leon_-_que_m%C3%A1s_puedo_pedir__video_oficial_.mp3"></audio>
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">
+        <svg id="icon" width="16" height="16" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784167995/imagen1_sckth1.jpg" alt="Info"></div>
+
+  <div class="counter-section">
+    <div class="tiempo">
+      <div class="bloque"><span id="dias">000</span><div class="label">DÍAS</div></div>
+      <div class="bloque"><span id="horas">00</span><div class="label">HORAS</div></div>
+      <div class="bloque"><span id="minutos">00</span><div class="label">MINUTOS</div></div>
+      <div class="bloque"><span id="segundos">00</span><div class="label">SEG</div></div>
+    </div>
+  </div>
+
+  <div class="map-container">
+    <img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784168519/imagen2_mlgbzw.jpg" alt="Mapa">
+    <a href="https://www.google.com/maps/place/Catedral+Metropolitana+de+Chihuahua/@28.6360941,-106.0771903,859m" target="_blank" class="btn-beige abs-btn btn-catedral">VER UBICACIÓN</a>
+    <a href="https://www.google.com/maps/place/Quinta+Hacienda/@28.6973711,-106.0098703,858m" target="_blank" class="btn-beige abs-btn btn-quinta">VER UBICACIÓN</a>
+  </div>
+
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169086/Imagen3_if9yla.jpg" alt="Imagen 3"></div>
+
+  <div class="gallery-section">
+    <div class="slider-container">
+      <img src="https://i.imgur.com/XISfPAy.jpeg" class="active" alt="Foto 1">
+      <img src="https://i.imgur.com/z6S7gEO.jpeg" alt="Foto 2">
+      <img src="https://i.imgur.com/FR67F67.jpeg" alt="Foto 3">
+    </div>
+  </div>
+
+  <div class="gift-container">
+    <img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169087/Imagen4_okkgzs.jpg" alt="Mesa Regalos">
+    <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51999139" target="_blank" class="btn-beige abs-btn btn-mesa">VISITAR MESA</a>
+  </div>
+
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169696/Imagen5_ufvigu.jpg" alt="Imagen 5"></div>
+  <div style="text-align: center; width: 100%; margin: 20px 0; background-color: #ffffff;">
+    <a href="https://www.google.com/maps?q=DOUBLETREE+BY+HILTON+-NORWALK+13111+Sycamore+Drive+Norwalk+CA.+90650" target="_blank" class="btn-beige">VER UBICACIÓN</a>
+  </div>
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169817/Imagen6_i5abgc.jpg" alt="Imagen 6"></div>
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169877/Imagen7_xe72xw.jpg" alt="Imagen 7"></div>
+
+  <div class="form-wrapper">
+    <div class="form-container">
+      <form id="rsvpForm">
+        <label class="titulo">Nombre y 2 Apellidos (Forzoso) *</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej. Fernanda López Cruz" required>
+        <small id="error-nombre" style="color: #d9534f; font-size: 11px; display: none; margin-top: 4px;">Debes ingresar obligatoriamente tu nombre y tus dos apellidos.</small>
+
+        <label class="titulo">¿Asistirás?</label>
+        <div class="opciones-asistencia">
+          <label class="opcion-item"><input type="radio" name="asistencia" value="Sí asisto" checked>SÍ, ASISTIRÉ</label>
+          <label class="opcion-item"><input type="radio" name="asistencia" value="No asisto">NO PODRÉ ASISTIR</label>
+        </div>
+
+        <label class="titulo">Mensaje para los novios</label>
+        <textarea name="mensaje" id="mensaje" rows="3" placeholder="Escribe unas palabras..."></textarea>
+
+        <button type="submit" id="btn">ENVIAR RESPUESTA</button>
+      </form>
+
+      <div id="exito">
+        <h3 id="success-title" style="color: #B38E5D; font-size: 20px; margin-bottom: 10px;">¡Muchas gracias!</h3>
+        <p id="success-message" style="font-size: 13px; margin-bottom: 15px; line-height: 1.4; color: #8A7A6B; font-family: 'Montserrat', sans-serif;">Tu respuesta ha sido registrada con éxito.</p>
+        
+        <div class="pass-container" id="pass-section">
+            <p style="font-size: 13px; margin-bottom: 8px; font-family: 'Cinzel', serif;"><strong>Tu Pase de Entrada:</strong></p>
+            <div id="captura-pase" style="position: relative; display: inline-block; width: 100%;">
+                <img src="pase.jpg" alt="Pase de Invitación" id="pase-img">
+                <div id="nombre-pase-overlay"></div>
+            </div>
+            <button id="btn-descargar">Descargar Pase</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="img-container"><img src="https://res.cloudinary.com/gghygmrq/image/upload/v1784169933/Imagen8_muzelr.jpg" alt="Imagen 8"></div>
+</div>
+
+<script>
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('playBtn');
+  const icon = document.getElementById('icon');
+
+  function togglePlay(){  
+    if(audio.paused) {
+      audio.play();
+      icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    } else {
+      audio.pause();
+      icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+  }
+  
+  const fechaEvento = new Date("2026-08-01T17:30:00");
+  function actualizarContador(){
+    const dif = fechaEvento - new Date().getTime();
+    if(dif > 0){
+      document.getElementById("dias").textContent = Math.floor(dif / (1000*60*60*24));
+      document.getElementById("horas").textContent = Math.floor((dif / (1000*60*60)) % 24).toString().padStart(2,"0");
+      document.getElementById("minutos").textContent = Math.floor((dif / (1000*60)) % 60).toString().padStart(2,"0");
+      document.getElementById("segundos").textContent = Math.floor((dif / 1000) % 60).toString().padStart(2,"0");
+    }
+  }
+  setInterval(actualizarContador, 1000);
+
+  const images = document.querySelectorAll('.slider-container img');
+  let current = 0;
+  setInterval(() => {
+    images[current].classList.remove('active');
+    current = (current + 1) % images.length;
+    images[current].classList.add('active');
+  }, 3000);
+
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwevauBR0xvW08HKkHTeM1DicvTTfwWdTAIl7EWzGLQQp8b-1EGZiL3UIRTUcDVuwbARw/exec';
+
+  const rsvpForm = document.getElementById('rsvpForm');
+  const successScreen = document.getElementById('exito');
+  const successTitle = document.getElementById('success-title');
+  const successMessage = document.getElementById('success-message');
+  const passSection = document.getElementById('pass-section');
+  const btnDescargar = document.getElementById('btn-descargar');
+  const inputNombre = document.getElementById('nombre');
+  const errorNombre = document.getElementById('error-nombre');
+  const nombrePaseOverlay = document.getElementById('nombre-pase-overlay');
+
+  function validarNombreCompleto(texto) {
+      const palabras = texto.trim().split(/\s+/);
+      return palabras.length >= 3;
+  }
+
+  rsvpForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = inputNombre.value.trim();
+      
+      if (!validarNombreCompleto(nombre)) {
+          errorNombre.style.display = 'block';
+          inputNombre.focus();
+          return;
+      } else {
+          errorNombre.style.display = 'none';
+      }
+
+      const btnEnviar = document.getElementById('btn');
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Verificando registro...';
+
+      const asistenciaInput = document.querySelector('input[name="asistencia"]:checked');
+      const asistencia = asistenciaInput ? (asistenciaInput.value === '1' || asistenciaInput.value === 'Sí asisto' ? 'Sí asisto' : 'No asisto') : 'Sí asisto';
+      const mensaje = document.getElementById('mensaje').value.trim();
+
+      const datos = {
+          nombre: nombre,
+          asistencia: asistencia,
+          mensaje: mensaje
+      };
+
+      try {
+          const response = await fetch(SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify(datos)
+          });
+          const result = await response.json();
+
+          if (result.status === 'success' || result.status === 'duplicado' || result.status === 'actualizado') {
+              const statusFinal = result.asistencia || asistencia;
+              mostrarPantallaExito({ 
+                  nombre: nombre, 
+                  asistencia: statusFinal, 
+                  isDuplicado: result.status === 'duplicado',
+                  isActualizado: result.status === 'actualizado'
+              });
+          } else {
+              mostrarPantallaExito({ nombre: nombre, asistencia: asistencia });
+          }
+      } catch (error) {
+          console.error('Error o modo no-cors:', error);
+          mostrarPantallaExito({ nombre: nombre, asistencia: asistencia });
+      }
+  });
+
+  function mostrarPantallaExito(data) {
+      rsvpForm.style.display = 'none';
+      successScreen.style.display = 'block';
+
+      nombrePaseOverlay.textContent = data.nombre.toUpperCase();
+
+      if (data.asistencia === 'No asisto') {
+          if (data.isActualizado) {
+              successTitle.textContent = '¡Respuesta actualizada!';
+              successMessage.textContent = `${data.nombre}, hemos actualizado tu registro. Ahora has indicado que no podrás asistir.`;
+          } else if (data.isDuplicado) {
+              successTitle.textContent = '¡Ya habías registrado tu respuesta!';
+              successMessage.textContent = `${data.nombre}, detectamos que ya habías confirmado previamente que no podrás asistir. ¡Agradecemos tus buenos deseos!`;
+          } else {
+              successTitle.textContent = 'Gracias por avisarnos';
+              successMessage.textContent = `${data.nombre}, hemos registrado que lamentablemente no nos acompañarás. ¡Gracias por tus buenos deseos!`;
+          }
+          passSection.classList.add('hidden');
+      } else {
+          if (data.isActualizado) {
+              successTitle.textContent = '¡Respuesta actualizada!';
+              successMessage.textContent = `${data.nombre}, hemos actualizado tu registro. ¡Ahora sí estás confirmado(a)! Aquí tienes tu pase:`;
+          } else if (data.isDuplicado) {
+              successTitle.textContent = '¡Ya estás registrado(a)!';
+              successMessage.textContent = `${data.nombre}, detectamos que ya habías confirmado tu asistencia con anterioridad. ¡Aquí tienes tu pase de entrada!:`;
+          } else {
+              successTitle.textContent = '¡Muchas gracias!';
+              successMessage.textContent = `${data.nombre}, tu registro ha sido validado correctamente.`;
+          }
+          passSection.classList.remove('hidden');
+      }
+  }
+
+  btnDescargar.addEventListener('click', () => {
+      btnDescargar.disabled = true;
+      btnDescargar.textContent = 'Generando pase...';
+
+      const imgPase = document.getElementById('pase-img');
+      const nombreText = document.getElementById('nombre-pase-overlay').textContent;
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = imgPase.naturalWidth;
+      canvas.height = imgPase.naturalHeight;
+
+      ctx.drawImage(imgPase, 0, 0, canvas.width, canvas.height);
+
+      const fontSize = canvas.width * 0.045;
+      ctx.font = `bold ${fontSize}px 'Cinzel', serif`;
+      ctx.fillStyle = '#000000';
+      ctx.textBaseline = 'middle';
+
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
+      ctx.shadowBlur = 4;
+
+      const posX = canvas.width * 0.08;
+      const posY = canvas.height * 0.89;
+
+      ctx.fillText(nombreText.toUpperCase(), posX, posY);
+
+      try {
+          canvas.toBlob((blob) => {
+              if (!blob) throw new Error("No se pudo crear la imagen");
+
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `Pase_${nombreText.replace(/\s+/g, '_')}.jpg`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              window.URL.revokeObjectURL(url);
+
+              btnDescargar.disabled = false;
+              btnDescargar.textContent = 'Descargar Pase';
+          }, 'image/jpeg', 0.95);
+          
+      } catch (error) {
+          console.error("Bloqueo de seguridad local CORS:", error);
+          alert("⚠️ NAVEGADOR BLOQUEÓ LA DESCARGA LOCAL\n\nEstás abriendo la página directamente con doble clic (file:///...). Usa 'Live Server' en VS Code o súbelo a internet para probar la descarga.");
+          btnDescargar.disabled = false;
+          btnDescargar.textContent = 'Descargar Pase';
+      }
+  });
+</script>
+</body>
+</html>
