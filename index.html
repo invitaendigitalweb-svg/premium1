@@ -104,6 +104,7 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
+    /* MODIFICADO: Se ajusta para que el texto sea responsivo, flexible y baje de línea si es necesario */
     #nombre-pase-overlay {
         position: absolute;
         top: 89%;
@@ -111,17 +112,18 @@
         transform: translateY(-50%);
         width: 84%;
         font-family: 'Cinzel', serif;
-        font-size: 15px;
+        /* El tamaño se adapta dinámicamente según el ancho de la pantalla del celular */
+        font-size: clamp(10px, 3.8vw, 15px);
         color: #000000;
         font-weight: bold;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         text-align: left;
         pointer-events: none;
         text-shadow: 0 1px 2px rgba(255,255,255,0.9);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        word-break: break-word;
+        overflow-wrap: break-word;
         text-transform: uppercase;
+        line-height: 1.2;
     }
 
     .hidden {
@@ -393,8 +395,19 @@
 
       ctx.drawImage(imgPase, 0, 0, canvas.width, canvas.height);
 
-      const fontSize = canvas.width * 0.045;
+      // MODIFICADO: Ajuste dinámico de la fuente para el Canvas si el nombre es muy largo
+      let fontSize = canvas.width * 0.045; // Tamaño ideal estándar
       ctx.font = `bold ${fontSize}px 'Cinzel', serif`;
+      
+      const maxWidth = canvas.width * 0.84; // Ancho máximo permitido (84% del pase)
+      
+      // Si el texto mide más que el ancho disponible, reducimos el tamaño de la fuente proporcionalmente
+      let textWidth = ctx.measureText(nombreText).width;
+      if (textWidth > maxWidth) {
+          fontSize = fontSize * (maxWidth / textWidth);
+          ctx.font = `bold ${fontSize}px 'Cinzel', serif`;
+      }
+
       ctx.fillStyle = '#000000';
       ctx.textBaseline = 'middle';
 
